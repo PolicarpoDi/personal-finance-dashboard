@@ -12,10 +12,8 @@ from app import app
 
 # =========  Layout  =========== #
 layout = dbc.Col([
-    html.H5('Extratos')
-
-
-], )
+       html.H5('Extratos')
+    ])
 
 # =========  Callbacks  =========== #
 # Tabela
