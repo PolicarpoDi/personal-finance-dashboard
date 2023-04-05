@@ -210,7 +210,7 @@ layout = dbc.Col([
                 centered=True,
                 backdrop=True),
                 
-    # Sesão NAV ------------------------------
+    # Sessão NAV ------------------------------
                 html.Hr(),
                 dbc.Nav([
                     dbc.NavLink('Dashboard', href='/dashboards', active='exact'),

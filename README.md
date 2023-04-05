@@ -24,3 +24,6 @@ Utilizando apenas **PYTHON** e as bibliotecas:
 > - Dash Bootstrap
 > - Plotly
 > - Pandas
+
+
+#### Projeto desenvolvido no curso da **AZIMOV ACADEMY**
