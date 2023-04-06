@@ -48,11 +48,11 @@ layout = dbc.Col([
                         dbc.Row([
                             dbc.Col([
                                 dbc.Label('Descrição: '),
-                                dbc.Input(placeholder='Ex.: dividendos da bolsa, herança...', id='txt-receita'),
+                                dbc.Input(placeholder='Ex.: Dividendos da Bolsa, Venda de Cripto...', id='txt-receita'),
                             ], width=6),
                             dbc.Col([
                                 dbc.Label('Valor: '),
-                                dbc.Input(placeholder='$100.00', id='valor_receita', value='')
+                                dbc.Input(placeholder='R$100,00', id='valor_receita', value='')
                             ], width=6)
                         ]),
                         
@@ -133,11 +133,11 @@ layout = dbc.Col([
                         dbc.Row([
                             dbc.Col([
                                 dbc.Label('Descrição: '),
-                                dbc.Input(placeholder='Ex.: Gasolina, Pestshop, etc...', id='txt-despesa'),
+                                dbc.Input(placeholder='Ex.: Cartão de Credito, Luz, Internet...', id='txt-despesa'),
                             ], width=6),
                             dbc.Col([
                                 dbc.Label('Valor: '),
-                                dbc.Input(placeholder='$100.00', id='valor_despesa', value='')
+                                dbc.Input(placeholder='R$100,00', id='valor_despesa', value='')
                             ], width=6)
                         ]),
                         

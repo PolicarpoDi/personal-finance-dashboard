@@ -34,7 +34,7 @@ def render_page(pathname):
     if pathname == '/' or pathname == '/dashboards':
         return dashboards.layout
     
-    if pathname == '/extracts':
+    if pathname == '/extratos':
         return extratos.layout
 
 if __name__ == '__main__':
