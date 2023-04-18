@@ -21,7 +21,7 @@ else:
     df_receitas.to_csv('df_receitas.csv')
     df_despesas.to_csv('df_despesas.csv')
     
-if ("df_cat_despesas.csv" in os.listdir()) and ("df_cat_receitas.csv" in os.listdir()):
+if ("df_cat_receita.csv" in os.listdir()) and ("df_cat_despesa.csv" in os.listdir()):
     df_cat_despesa  = pd.read_csv("df_cat_despesa.csv", index_col=0, parse_dates=True)
     df_cat_receita  = pd.read_csv("df_cat_receita.csv", index_col=0, parse_dates=True)
     # Pega o dataframe e joga os valores para uma lista
@@ -29,8 +29,8 @@ if ("df_cat_despesas.csv" in os.listdir()) and ("df_cat_receitas.csv" in os.list
     cat_despesa = df_cat_despesa.values.tolist()
     
 else:
-    cat_receita = {'Categoria': ['Salário', 'Investimentos', 'Comissão']}
-    cat_despesa = {'Categoria': ['Cartão de Credito', 'Financiamento', 'Impostos']}
+    cat_receita = {'Categoria': ["Salário", "Investimentos", "Comissão"]}
+    cat_despesa = {'Categoria': ["Cartão de Credito", "Financiamento", "Impostos"]}
     
     df_cat_receita = pd.DataFrame(cat_receita)
     df_cat_despesa = pd.DataFrame(cat_despesa)
