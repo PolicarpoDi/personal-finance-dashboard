@@ -27,7 +27,8 @@ app.layout = dbc.Container(children=[
         dbc.Col([
             dcc.Location(id='url'),
             sidebar.layout
-        ], md=2, style={'background-color': 'black', 'height':'1080px'}),
+            # #edf2fa = cinza claro
+        ], md=2, style={'background-color': '#edf2fa', 'height':'1080px'}),
         dbc.Col([
             content
         ], md=10, style={'background-color': '#edf2fa', 'height':'1080px'})

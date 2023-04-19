@@ -1,1 +1,6 @@
 ,Valor,Efetuado,Fixo,Data,Categoria,Descrição
+0,1600.0,1,0,2023-04-05,Cartão de Credito,Cartão C6
+1,150.0,1,0,2023-04-10,Cartão de Credito,Cartão Nubank
+2,200.0,1,0,2023-04-20,Residencia,Luz
+3,35.0,1,0,2023-04-10,Residencia,Agua
+4,800.0,1,0,2023-04-10,Financiamento,Casa

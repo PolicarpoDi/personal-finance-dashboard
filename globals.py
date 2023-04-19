@@ -2,12 +2,15 @@ import pandas as pd
 import os
 
 
-
 # Criando a estrutura do csv para utilização dos dados. 
 # Primeiro verifico se já tem dentro da estrutura de pastas os arquivos 
 if ("df_despesas.csv" in os.listdir()) and ("df_receitas.csv" in os.listdir()):
     df_despesas  = pd.read_csv("df_despesas.csv", index_col=0, parse_dates=True)
     df_receitas  = pd.read_csv("df_receitas.csv", index_col=0, parse_dates=True)
+    df_despesas['Data'] = pd.to_datetime(df_despesas['Data'])
+    df_receitas['Data'] = pd.to_datetime(df_receitas['Data'])
+    df_despesas['Data'] = df_despesas['Data'].apply(lambda x: x.date())
+    df_receitas['Data'] = df_receitas['Data'].apply(lambda x: x.date())
 # Se não tiver, crio os arquivos    
 else:
     data_structure = {'Valor': [],

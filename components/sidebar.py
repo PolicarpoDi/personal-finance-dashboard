@@ -104,7 +104,7 @@ layout = dbc.Col([
                                         html.Legend('Excluir categoria', style={'color': 'red'}),
                                         dbc.Checklist(
                                             id='checklist-selected-style-receita',
-                                            options=[],
+                                            options=[{"label": i, "value": i} for i in cat_receita],
                                             value=[],
                                             label_checked_style={'color': 'red'},
                                             input_checked_style={'backgroundColor': 'blue', 'borderColor': 'orange'},
@@ -159,10 +159,11 @@ layout = dbc.Col([
                             dbc.Col([
                                 dbc.Label('Extras'),
                                 dbc.Checklist(
-                                    options=[],
-                                    value=[],
+                                    options=[{"label": "Foi Recebida", "value": 1},
+                                             {"label": "Despesa Recorrente", "value": 2}],
+                                    value=[1],
                                     id='switches-input-despesa',
-                                    switch=True
+                                    switch=True,
                                 )
                             ], width=4),
                             
@@ -191,7 +192,7 @@ layout = dbc.Col([
                                         html.Legend('Excluir categoria', style={'color': 'red'}),
                                         dbc.Checklist(
                                             id='checklist-selected-style-despesa',
-                                            options=[],
+                                            options=[{"label": i, "value": i} for i in cat_despesa],
                                             value=[],
                                             label_checked_style={'color': 'red'},
                                             input_checked_style={'backgroundColor': 'blue', 'borderColor': 'orange'},
@@ -274,10 +275,12 @@ def salve_form_receita(n, descricao, valor, date, switches, categoria, dict_rece
     #import pdb
     #pdb.set_trace()
     
+    df_receitas = pd.DataFrame(dict_receitas)
+    
     if n and not(valor == "" or valor == None):
         valor = round(float(valor), 2)
         date = pd.to_datetime(date).date()
-        categoria = categoria[0]
+        categoria = categoria[0] if type(categoria) == list else categoria
         recebido = 1 if 1 in switches else 0
         fixo = 1 if 2 in switches else 0
         
@@ -286,6 +289,103 @@ def salve_form_receita(n, descricao, valor, date, switches, categoria, dict_rece
         
     data_return = df_receitas.to_dict()
     return data_return
-        
+
+@app.callback(
+    Output('store-despesas', 'data'),
     
-    return {}
+    Input('salvar_despesa', 'n_clicks'),
+    [
+        State('txt-despesa', 'value'),
+        State('valor_despesa', 'value'),
+        State('date-despesas', 'date'),
+        State('switches-input-despesa', 'value'),
+        State('select_despesa', 'value'),
+        State('store-despesas', 'data')
+    ]
+)
+def salve_form_despesa(n, descricao, valor, date, switches, categoria, dict_despesas):
+    #import pdb
+    #pdb.set_trace()
+    
+    df_despesas = pd.DataFrame(dict_despesas)
+    
+    if n and not(valor == "" or valor == None):
+        valor = round(float(valor), 2)
+        date = pd.to_datetime(date).date()
+        categoria = categoria[0] if type(categoria) == list else categoria
+        recebido = 1 if 1 in switches else 0
+        fixo = 1 if 2 in switches else 0
+        
+        df_despesas.loc[df_despesas.shape[0]] = [valor, recebido, fixo, date, categoria, descricao]
+        df_despesas.to_csv("df_despesas.csv")
+        
+    data_return = df_despesas.to_dict()
+    return data_return
+
+@app.callback(
+    [
+        Output("select_despesa", "options"),
+        Output("checklist-selected-style-despesa", "options"),
+        Output("checklist-selected-style-despesa", "value"),
+        Output("store-cat-despesas", "data")],
+    
+    [
+        Input("add-category-despesa", "n_clicks"),
+        Input("remove-category-despesa", "n_clicks")],
+    
+    [
+        State("input-add-despesa", "value"),
+        State("checklist-selected-style-despesa", "value"),
+        State("store-cat-despesas", "data")]
+)
+
+def add_category(n, n2, txt, check_delete, data):
+    cat_despesa = list(data["Categoria"].values())
+
+    if n and not (txt == "" or txt == None):
+        cat_despesa = cat_despesa + [txt] if txt not in cat_despesa else cat_despesa
+        
+    if n2:
+        if len(check_delete) > 0:
+            cat_despesa = [i for i in cat_despesa if i not in check_delete]
+            
+    opt_despesa = [{"label": i, "value": i} for i in cat_despesa]
+    df_cat_despesa = pd.DataFrame(cat_despesa, columns=['Categoria'])
+    df_cat_despesa.to_csv("df_cat_despesa.csv")
+    data_return = df_cat_despesa.to_dict()
+    
+    return [opt_despesa, opt_despesa, [], data_return]
+
+@app.callback(
+    [
+        Output("select_receita", "options"),
+        Output("checklist-selected-style-receita", "options"),
+        Output("checklist-selected-style-receita", "value"),
+        Output("store-cat-receitas", "data")],
+    
+    [
+        Input("add-category-receita", "n_clicks"),
+        Input("remove-category-receita", "n_clicks")],
+    
+    [
+        State("input-add-receita", "value"),
+        State("checklist-selected-style-receita", "value"),
+        State("store-cat-receitas", "data")]
+)
+
+def add_category(n, n2, txt, check_delete, data):
+    cat_receita = list(data["Categoria"].values())
+
+    if n and not (txt == "" or txt == None):
+        cat_receita = cat_receita + [txt] if txt not in cat_receita else cat_receita
+        
+    if n2:
+        if len(check_delete) > 0:
+            cat_receita = [i for i in cat_receita if i not in check_delete]
+            
+    opt_receita = [{"label": i, "value": i} for i in cat_receita]
+    df_cat_receita = pd.DataFrame(cat_receita, columns=['Categoria'])
+    df_cat_receita.to_csv("df_cat_receita.csv")
+    data_return = df_cat_receita.to_dict()
+    
+    return [opt_receita, opt_receita, [], data_return]
